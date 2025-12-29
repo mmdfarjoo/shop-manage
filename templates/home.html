@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>سیستم فروش و انبار</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'home' %}">سیستم فروش</a>
+        <div class="navbar-nav">
+            <a class="nav-link" href="{% url 'dashboard' %}">داشبورد</a>
+            <a class="nav-link" href="{% url 'open_invoices' %}">فاکتورهای باز</a>
+            <a class="nav-link" href="{% url 'customers_report' %}">گزارش مشتریان</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-5">
+
+    <h3 class="mb-4 text-center">پنل مدیریت سیستم فروش</h3>
+
+    <div class="row g-4">
+
+        <!-- داشبورد -->
+        <div class="col-md-3">
+            <a href="{% url 'dashboard' %}" class="text-decoration-none">
+                <div class="card text-bg-primary h-100">
+                    <div class="card-body text-center">
+                        <h5>داشبورد</h5>
+                        <p>نمای کلی سیستم</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- فاکتور فروش -->
+        <div class="col-md-3">
+            <a href="{% url 'create_invoice' %}" class="text-decoration-none">
+                <div class="card text-bg-success h-100">
+                    <div class="card-body text-center">
+                        <h5>فاکتور فروش</h5>
+                        <p>ثبت فروش جدید</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- فاکتور خرید -->
+        <div class="col-md-3">
+            <a href="{% url 'create_purchase_invoice' %}" class="text-decoration-none">
+                <div class="card text-bg-warning h-100">
+                    <div class="card-body text-center">
+                        <h5>حواله خرید</h5>
+                        <p>افزایش موجودی</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- پرداخت -->
+        <div class="col-md-3">
+            <a href="{% url 'add_payment' %}" class="text-decoration-none">
+                <div class="card text-bg-danger h-100">
+                    <div class="card-body text-center">
+                        <h5>پرداخت</h5>
+                        <p>تسویه حساب</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- گزارش فاکتورهای باز -->
+        <div class="col-md-3">
+            <a href="{% url 'open_invoices' %}" class="text-decoration-none">
+                <div class="card bg-secondary text-white h-100">
+                    <div class="card-body text-center">
+                        <h5>فاکتورهای باز</h5>
+                        <p>پرداخت نشده</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- گزارش مشتریان -->
+        <div class="col-md-3">
+            <a href="{% url 'customers_report' %}" class="text-decoration-none">
+                <div class="card bg-info text-white h-100">
+                    <div class="card-body text-center">
+                        <h5>گزارش مشتریان</h5>
+                        <p>بدهکار / بستانکار</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- مدیریت کالا (ادمین) -->
+        <div class="col-md-3">
+            <a href="inventory/" class="text-decoration-none">
+                <div class="card bg-dark text-white h-100">
+                    <div class="card-body text-center">
+                        <h5>کالاها</h5>
+                        <p>مدیریت انبار</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- مشتریان -->
+        <div class="col-md-3">
+            <a href="/admin/core/customer/" class="text-decoration-none">
+                <div class="card bg-light border h-100">
+                    <div class="card-body text-center">
+                        <h5>مشتریان</h5>
+                        <p>مدیریت مشتریان</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

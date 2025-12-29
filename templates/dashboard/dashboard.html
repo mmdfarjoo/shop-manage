@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>داشبورد مدیریتی</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container mt-4">
+
+<h3 class="mb-4">داشبورد مدیریتی</h3>
+
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card text-bg-primary">
+            <div class="card-body">
+                <h6>کل فروش</h6>
+                <h4>{{ total_sales }} تومان</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card text-bg-success">
+            <div class="card-body">
+                <h6>پرداخت‌ها</h6>
+                <h4>{{ total_paid }} تومان</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card text-bg-danger">
+            <div class="card-body">
+                <h6>بدهی کل</h6>
+                <h4>{{ total_debt }} تومان</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card text-bg-warning">
+            <div class="card-body">
+                <h6>فاکتورهای باز</h6>
+                <h4>{{ open_invoices_count }}</h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<h5>آخرین فاکتورهای فروش</h5>
+<table class="table table-bordered mb-4">
+    <tr>
+        <th>شماره</th>
+        <th>مشتری</th>
+        <th>مبلغ</th>
+        <th>مانده</th>
+    </tr>
+    {% for i in recent_invoices %}
+    <tr>
+        <td>{{ i.id }}</td>
+        <td>{{ i.customer }}</td>
+        <td>{{ i.total_price }}</td>
+        <td>{{ i.remaining_amount }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<h5>کالاهای کم‌موجودی</h5>
+<table class="table table-bordered">
+    <tr>
+        <th>کالا</th>
+        <th>موجودی</th>
+    </tr>
+    {% for p in low_stock_products %}
+    <tr class="table-warning">
+        <td>{{ p.name }}</td>
+        <td>{{ p.stock }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="2">همه کالاها موجودی مناسب دارند</td>
+    </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>
