@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>گزارش خرید کالاها</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+</head>
+<body class="container mt-4">
+
+<h3 class="mb-4">گزارش خرید کالاها</h3>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>نام کالا</th>
+            <th>دسته‌بندی</th>
+            <th>تعداد خریداری شده</th>
+            <th>مجموع هزینه (تومان)</th>
+            <th>موجودی فعلی</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in report %}
+        <tr>
+            <td>{{ item.name }}</td>
+            <td>{{ item.category }}</td>
+            <td>{{ item.total_quantity }}</td>
+            <td>{{ item.total_spent }}</td>
+            <td>{{ item.stock }}</td> <!-- می‌توانیم موجودی فعلی محصول را از مدل Product نمایش دهیم -->
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{% url 'home' %}" class="btn btn-primary mt-3">بازگشت به صفحه اصلی</a>
+
+</body>
+</html>
+

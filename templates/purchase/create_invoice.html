@@ -1,18 +1,79 @@
 <!DOCTYPE html>
-<html>
+<html lang="fa" dir="rtl">
 <head>
+    <meta charset="UTF-8">
     <title>ثبت حواله خرید</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap RTL -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+
+    <!-- Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Persian Font -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f4f6f9;
+            font-family: Vazirmatn, sans-serif;
+        }
+        .card {
+            border-radius: 16px;
+        }
+    </style>
 </head>
-<body class="container mt-5">
+<body>
 
-<h3>ثبت حواله خرید</h3>
+<div class="container py-5">
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button class="btn btn-primary">ادامه</button>
-</form>
+    <!-- Title -->
+    <div class="text-center mb-4">
+        <h4 class="fw-bold">
+            <i class="bi bi-box-arrow-in-down ms-1"></i>
+            ثبت حواله خرید
+        </h4>
+        <p class="text-muted">
+            ایجاد حواله جدید جهت افزایش موجودی کالا
+        </p>
+    </div>
+
+    <!-- Form Card -->
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <div class="card shadow-sm p-4">
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    <!-- Django Form -->
+                    <div class="mb-3">
+                        <label> نام تامین کننده </label>
+                        {{ form.as_p }}
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="d-flex justify-content-between mt-4">
+                        <a href="{% url 'home' %}" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-right"></i>
+                            بازگشت
+                        </a>
+
+                        <button type="submit" class="btn btn-success px-4">
+                            ادامه و افزودن کالا
+                            <i class="bi bi-arrow-left ms-1"></i>
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
 
 </body>
 </html>

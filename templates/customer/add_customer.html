@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>افزودن مشتری جدید</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+    <style>
+        body { background-color: #f4f6f9; font-family: Vazirmatn, sans-serif; }
+        .card { border-radius: 16px; max-width: 500px; margin: auto; padding: 30px; box-shadow: 0 0 15px rgba(0,0,0,0.1); }
+        .form-label { font-weight: 500; }
+    </style>
+</head>
+<body>
+
+<div class="container py-5">
+    <div class="card">
+        <h4 class="fw-bold mb-3 text-center"><i class="bi bi-person-plus ms-1"></i> افزودن مشتری جدید</h4>
+        <p class="text-muted text-center mb-4">در این بخش می‌توانید مشتری جدید ثبت کنید</p>
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="text-center mt-3">
+                <button type="submit" class="btn btn-success px-4">ثبت مشتری <i class="bi bi-check2 ms-1"></i></button>
+            </div>
+        </form>
+
+        <div class="text-center mt-3">
+            <a href="{% url 'home' %}" class="btn btn-outline-secondary">بازگشت به صفحه اصلی</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,56 +1,147 @@
 <!DOCTYPE html>
-<html>
+<html lang="fa" dir="rtl">
 <head>
-    <title>افزودن کالا به حواله</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>افزودن کالا به حواله خرید</title>
+
+    <!-- Bootstrap RTL -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+
+    <!-- Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Persian Font -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f4f6f9;
+            font-family: Vazirmatn, sans-serif;
+        }
+        .card {
+            border-radius: 16px;
+        }
+    </style>
 </head>
-<body class="container mt-4">
+<body>
 
-<h4>حواله شماره {{ invoice.id }}</h4>
-<p>تأمین‌کننده: {{ invoice.supplier_name }}</p>
+<div class="container py-4">
 
-<form method="post" class="row g-3">
-    {% csrf_token %}
-
-    <div class="col-md-4">
-        {{ form.product.label_tag }}
-        {{ form.product }}
+    <!-- Header -->
+    <div class="mb-4">
+        <h4 class="fw-bold">
+            <i class="bi bi-box-arrow-in-down ms-1"></i>
+            افزودن کالا به حواله خرید
+        </h4>
+        <p class="text-muted">
+            کالاهای خریداری‌شده را به حواله اضافه کنید
+        </p>
     </div>
 
-    <div class="col-md-3">
-        {{ form.quantity.label_tag }}
-        {{ form.quantity }}
+    <!-- Purchase Info -->
+    <div class="card p-3 mb-4 shadow-sm">
+        <div class="row">
+            <div class="col-md-6">
+                <strong>شماره حواله:</strong> {{ invoice.id }}
+            </div>
+            <div class="col-md-6">
+                <strong>تاریخ:</strong> {{ invoice.date }}
+            </div>
+        </div>
     </div>
 
-    <div class="col-md-3">
-        {{ form.price.label_tag }}
-        {{ form.price }}
+    <div class="row">
+
+        <!-- Add Item Form -->
+        <div class="col-md-5">
+            <div class="card p-4 shadow-sm">
+
+                <h6 class="fw-bold mb-3">افزودن کالا</h6>
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label class="form-label">کالا</label>
+                        {{ form.product }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">تعداد خرید</label>
+                        {{ form.quantity }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">قیمت خرید (تومان)</label>
+                        {{ form.price }}
+                    </div>
+
+                    <button type="submit" class="btn btn-success w-100">
+                        افزودن به حواله
+                    </button>
+                </form>
+
+            </div>
+        </div>
+
+        <!-- Items Table -->
+        <div class="col-md-7">
+            <div class="card p-4 shadow-sm">
+
+                <h6 class="fw-bold mb-3">اقلام ثبت‌شده در حواله</h6>
+
+                <table class="table table-bordered table-sm align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>کالا</th>
+                            <th>تعداد</th>
+                            <th>قیمت خرید</th>
+                            <th>جمع</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in items %}
+                        <tr>
+                            <td>{{ item.product.name }}</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>{{ item.price }} تومان</td>
+                            <td>{{ item.total_price }} تومان</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4" class="text-center text-muted">
+                                کالایی به حواله اضافه نشده است
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <!-- Total -->
+                <div class="text-end fw-bold mt-3">
+                    جمع کل حواله:
+                    <span class="text-success">
+                        {{ invoice.total_price }} تومان
+                    </span>
+                </div>
+
+            </div>
+        </div>
+
     </div>
 
-    <div class="col-md-2 align-self-end">
-        <button class="btn btn-success w-100">افزودن</button>
+    <!-- Actions -->
+    <div class="d-flex justify-content-between mt-4">
+        <a href="{% url 'create_purchase_invoice' %}" class="btn btn-outline-secondary">
+            حواله جدید
+        </a>
+
+        <a href="{% url 'home' %}" class="btn btn-primary">
+            بازگشت به صفحه اصلی
+        </a>
     </div>
-</form>
 
-<hr>
-
-<h5>اقلام حواله</h5>
-<table class="table table-bordered">
-    <tr>
-        <th>کالا</th>
-        <th>تعداد</th>
-        <th>قیمت</th>
-        <th>جمع</th>
-    </tr>
-    {% for item in invoice.items.all %}
-    <tr>
-        <td>{{ item.product }}</td>
-        <td>{{ item.quantity }}</td>
-        <td>{{ item.price }}</td>
-        <td>{{ item.total_price }}</td>
-    </tr>
-    {% endfor %}
-</table>
+</div>
 
 </body>
 </html>

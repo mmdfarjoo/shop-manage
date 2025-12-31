@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import SaleInvoice, Product, Customer, Payment
-from .forms import SaleInvoiceForm, SaleItemForm , PurchaseInvoiceForm , PurchaseInvoice , PurchaseItemForm , PaymentForm
+from .forms import SaleInvoiceForm, SaleItemForm , PurchaseInvoiceForm , PurchaseInvoice , PurchaseItemForm , PaymentForm , CustomerForm ,PurchaseItem
 from django.db.models import Sum
 from django.utils.timezone import now
 
@@ -161,3 +161,40 @@ def inventory(request):
     })
 
 
+
+def add_customer(request):
+    if request.method == 'POST':
+        form = CustomerForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('customers_report')  # یا هر صفحه‌ای که میخوای بعد از ثبت بروه
+    else:
+        form = CustomerForm()
+
+    context = {
+        'form': form
+    }
+    return render(request, 'customer/add_customer.html', context)
+
+
+
+
+def purchase_report(request):
+    # همه کالاهایی که خریداری شده‌اند
+    purchased_items = PurchaseItem.objects.select_related('product', 'invoice').all()
+
+    # برای جمع‌بندی بر اساس محصول
+    report = {}
+    for item in purchased_items:
+        prod = item.product
+        if prod.id not in report:
+            report[prod.id] = {
+                'name': prod.name,
+                'category': prod.category.name,
+                'total_quantity': 0,
+                'total_spent': 0
+            }
+        report[prod.id]['total_quantity'] += item.quantity
+        report[prod.id]['total_spent'] += item.total_price()
+
+    return render(request, 'purchase/purchase_report.html', {'report': report.values()})

@@ -1,38 +1,93 @@
 <!DOCTYPE html>
-<html>
+<html lang="fa" dir="rtl">
 <head>
+    <meta charset="UTF-8">
     <title>ثبت فاکتور فروش</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap RTL -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+
+    <!-- Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Persian Font -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f4f6f9;
+            font-family: Vazirmatn, sans-serif;
+        }
+        .card {
+            border-radius: 16px;
+        }
+        .form-label {
+            font-weight: 500;
+        }
+    </style>
 </head>
-<body class="container mt-5">
+<body>
 
-<h3>ثبت فاکتور فروش</h3>
+<div class="container py-5">
 
-<form method="post">
-    {% csrf_token %}
-
-    <div class="mb-3">
-        {{ invoice_form.customer.label_tag }}
-        {{ invoice_form.customer }}
+    <!-- Header -->
+    <div class="text-center mb-4">
+        <h4 class="fw-bold">
+            <i class="bi bi-receipt-cutoff ms-1"></i>
+            ثبت فاکتور فروش
+        </h4>
+        <p class="text-muted">
+            در این بخش می‌توانید فاکتور فروش جدید ایجاد کرده و کالاها را ثبت کنید
+        </p>
     </div>
 
-    <div class="mb-3">
-        {{ item_form.product.label_tag }}
-        {{ item_form.product }}
+    <!-- Form Card -->
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm p-4">
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    <!-- انتخاب مشتری -->
+                    <div class="mb-3">
+                        <label class="form-label">انتخاب مشتری</label>
+                        {{ invoice_form.customer }}
+                    </div>
+
+                    <!-- انتخاب کالا -->
+                    <div class="mb-3">
+                        <label class="form-label">محصول</label>
+                        {{ item_form.product }}
+                    </div>
+
+                    <!-- تعداد -->
+                    <div class="mb-3">
+                        <label class="form-label">مقدار</label>
+                        {{ item_form.quantity }}
+                    </div>
+
+                    <!-- قیمت واحد -->
+                    <div class="mb-3">
+                        <label class="form-label">قیمت واحد</label>
+                        {{ item_form.price }}
+                    </div>
+
+                    <!-- دکمه ثبت -->
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-success px-4">
+                            ثبت فاکتور
+                            <i class="bi bi-arrow-left ms-1"></i>
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
     </div>
 
-    <div class="mb-3">
-        {{ item_form.quantity.label_tag }}
-        {{ item_form.quantity }}
-    </div>
-
-    <div class="mb-3">
-        {{ item_form.price.label_tag }}
-        {{ item_form.price }}
-    </div>
-
-    <button class="btn btn-success">ثبت فاکتور</button>
-</form>
+</div>
 
 </body>
 </html>

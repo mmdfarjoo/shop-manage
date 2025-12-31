@@ -28,44 +28,44 @@ class Product(models.Model):
         return self.name
 
 
-
-
-class Customer(models.Model):
-    name = models.CharField(max_length=200)
-    phone = models.CharField(max_length=15, blank=True)
-    address = models.TextField(blank=True)
-
-    def total_sales(self):
-        return sum(
-            invoice.total_price()
-            for invoice in self.saleinvoice_set.all()
-        )
-
-    def total_payments(self):
-        return sum(
-            payment.amount
-            for payment in self.payment_set.all()
-        )
-
-    def balance(self):
-        return self.total_sales() - self.total_payments()
-
-    def status(self):
-        if self.balance() > 0:
-            return "بدهکار"
-        elif self.balance() < 0:
-            return "بستانکار"
-        return "تسویه"
-
-    def __str__(self):
-        return self.name
-
-
+#
+#
+# class Customer(models.Model):
+#     name = models.CharField(max_length=200)
+#     phone = models.CharField(max_length=15, blank=True)
+#     address = models.TextField(blank=True)
+#
+#     def total_sales(self):
+#         return sum(
+#             invoice.total_price()
+#             for invoice in self.saleinvoice_set.all()
+#         )
+#
+#     def total_payments(self):
+#         return sum(
+#             payment.amount
+#             for payment in self.payment_set.all()
+#         )
+#
+#     def balance(self):
+#         return self.total_sales() - self.total_payments()
+#
+#     def status(self):
+#         if self.balance() > 0:
+#             return "بدهکار"
+#         elif self.balance() < 0:
+#             return "بستانکار"
+#         return "تسویه"
+#
+#     def __str__(self):
+#         return self.name
+#
+#
 
 
 
 class SaleInvoice(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.PROTECT)
+    customer = models.ForeignKey('core.Customer', on_delete=models.CASCADE)
     date = models.DateField(auto_now_add=True)
 
     def total_price(self):
@@ -142,7 +142,7 @@ class PurchaseItem(models.Model):
 
 
 class Payment(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.PROTECT)
+    customer = models.ForeignKey('core.Customer', on_delete=models.CASCADE)
     invoice = models.ForeignKey(
         SaleInvoice,
         on_delete=models.CASCADE,
@@ -156,3 +156,15 @@ class Payment(models.Model):
 
     def __str__(self):
         return f"{self.customer} - {self.amount}"
+
+
+
+
+class Customer(models.Model):
+    name = models.CharField(max_length=100)
+    phone = models.CharField(max_length=20, blank=True)
+    email = models.EmailField(blank=True)
+
+    def __str__(self):
+        return self.name
+

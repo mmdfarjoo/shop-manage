@@ -1,21 +1,104 @@
-<h3>فاکتور شماره {{ invoice.id }}</h3>
-<p>مشتری: {{ invoice.customer }}</p>
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>فاکتور شماره {{ invoice.id }}</title>
 
-<table class="table table-bordered">
-    <tr>
-        <th>کالا</th>
-        <th>تعداد</th>
-        <th>قیمت</th>
-        <th>جمع</th>
-    </tr>
-    {% for item in invoice.items.all %}
-    <tr>
-        <td>{{ item.product }}</td>
-        <td>{{ item.quantity }}</td>
-        <td>{{ item.price }}</td>
-        <td>{{ item.total_price }}</td>
-    </tr>
-    {% endfor %}
-</table>
+    <!-- Bootstrap RTL -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
 
-<h5>جمع کل: {{ invoice.total_price }} تومان</h5>
+    <!-- Persian Font -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f4f6f9;
+            font-family: Vazirmatn, sans-serif;
+        }
+        .invoice-card {
+            border-radius: 16px;
+            background: #fff;
+            padding: 30px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        .invoice-header {
+            border-bottom: 2px solid #dee2e6;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+        }
+        .invoice-table th {
+            background-color: #f8f9fa;
+        }
+        .text-primary {
+            color: #0d6efd !important;
+        }
+        @media print {
+            .no-print {
+                display: none;
+            }
+        }
+    </style>
+
+    <script>
+        function printInvoice() {
+            window.print();
+        }
+    </script>
+</head>
+<body>
+
+<div class="container py-5">
+
+    <!-- Print Button -->
+    <div class="mb-3 text-start no-print">
+        <button onclick="printInvoice()" class="btn btn-primary">
+            پرینت فاکتور
+        </button>
+        <a href="{% url 'home' %}" class="btn btn-outline-secondary">بازگشت به صفحه اصلی</a>
+    </div>
+
+    <!-- Invoice Card -->
+    <div class="invoice-card">
+
+        <!-- Header -->
+        <div class="invoice-header text-center mb-4">
+            <h3 class="fw-bold">فاکتور فروش شماره <span class="text-primary">{{ invoice.id }}</span></h3>
+            <p>مشتری: <strong>{{ invoice.customer }}</strong></p>
+            <p>تاریخ: <strong>{{ invoice.date }}</strong></p>
+        </div>
+
+        <!-- Items Table -->
+        <div class="table-responsive">
+            <table class="table table-bordered invoice-table text-center">
+                <thead>
+                    <tr>
+                        <th>کالا</th>
+                        <th>تعداد</th>
+                        <th>قیمت واحد (تومان)</th>
+                        <th>جمع (تومان)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in invoice.items.all %}
+                    <tr>
+                        <td>{{ item.product }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.price }}</td>
+                        <td>{{ item.total_price }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Total -->
+        <div class="text-end fw-bold mt-3 fs-5">
+            جمع کل: <span class="text-success">{{ invoice.total_price }} تومان</span>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
