@@ -34,10 +34,9 @@
 ```bash
 git clone https://github.com/USERNAME/REPOSITORY.git
 cd shop
-python -m venv venv
-venv\Scripts\activate
-pip install -r requirements.txt
+pip install django
 python manage.py migrate
+python manage.py createsuperuser <enter username is here>
 python manage.py runserver
 ```
 
